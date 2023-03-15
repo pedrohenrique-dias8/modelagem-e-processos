@@ -1,12 +1,11 @@
 clc;
 clear all;
-close all;
 setup;
 
-G = Gn; 
+T = Tn; 
 lambida = 0.35;
- 
- V = (0:0.01:1);
+
+V = (0:0.01:1);
  
  I0 = zeros(size(V));
  I25 = zeros(size(V));
@@ -23,9 +22,9 @@ lambida = 0.35;
  
  %%
  
-  T = 0+273;
+  G = 200;
   Vt = k*T/q;
- for i = 1:101
+ for i = 1:1:101
      Inov = 1;
      var = 0.5; 
      Vat = V(i);
@@ -39,21 +38,22 @@ lambida = 0.35;
           Inov = lambida*Inov + (1 - lambida)*Iant;
           var = Inov - Iant;
       end
-        if Inov < 0 
-           Inov = 0;
-        end
-      I0(i) = Inov;
+      if Inov<0
+         Inov = 0;
+     end
+      I200(i) = Inov;
  end
 %%
 
- T = 25+273;
+ G = 500;
  Vt = k*T/q;
- for i = 1:101
+  lambida = 0.35;
+ for i = 1:1:101
      Inov = 1;
      var = 0.5; 
      Vat = V(i);
      
-      while var > 0.0005
+      while var > 0.05
           Iant = Inov;
           Ipv = (G/Gn)*(Iscn + K1*(T-Tn));
           Id = Is*(exp((Vat + Rs*Iant)/(Vt*A)) - 1);
@@ -62,22 +62,22 @@ lambida = 0.35;
           Inov = lambida*Inov + (1 - lambida)*Iant;
           var = Inov - Iant;
       end
-       if Inov < 0 
-           Inov = 0;
-       end
-     I25(i) = Inov;
+      if Inov<0
+         Inov = 0;
+     end
+      I500(i) = Inov;
  end
 
 %%
-T = 60+273;
+G = 1000;
 Vt = k*T/q;
-
+ lambida = 0.35;
 for i = 1:101
     Inov = 1;
     var = 0.5; 
     Vat = V(i);
     
-     while var > 0.0005
+     while var > 0.05
          Iant = Inov;
          Ipv = (G/Gn)*(Iscn + K1*(T-Tn));
          Id = Is*(exp((Vat + Rs*Iant)/(Vt*A)) - 1);
@@ -86,29 +86,29 @@ for i = 1:101
          Inov = lambida*Inov + (1 - lambida)*Iant;
          var = Inov - Iant;
      end
-       if Inov < 0 
-           Inov = 0;
-       end
-     I60(i) = Inov;
+     if Inov<0
+         Inov = 0;
+     end
+     I1000(i) = Inov;
 end 
 %%
 figure;
-plot(V,I60,'b', V, I0, 'g', V, I25, 'r');
+plot(V,I200,'b', V, I500, 'g', V, I1000, 'r');
 xlabel('V');
 ylabel('I');
 
 
-pot0 = zeros(size(V));
-pot25 = zeros(size(V));
-pot60 = zeros(size(V));
-for i = 1:101
-    pot0(i)= V(i)*I0(i);
-    pot25(i)= V(i)*I25(i);
-    pot60(i)= V(i)*I60(i);
+pot200 = zeros(size(V));
+pot500 = zeros(size(V));
+pot1000 = zeros(size(V));
+for i = 1:1:101
+    pot200(i)= V(i)*I200(i);
+    pot500(i)= V(i)*I500(i);
+    pot1000(i)= V(i)*I1000(i);
 end
 
 figure;
-plot(V,pot60,'b', V, pot0, 'g', V, pot25, 'r');
+plot(V,pot200,'b', V, pot500, 'g', V, pot1000, 'r');
 xlabel('V');
 ylabel('potencia');
 
