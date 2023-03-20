@@ -53,7 +53,7 @@ k = 1.38 *(10^(-23));
 
 figure;
 plot(counter, I1, 'b', counter, I2, 'g');
-
-
+grid on;
+legend({'0.5','0.8'},'Location','southwest');
 
 

@@ -146,7 +146,7 @@ plot(V60,I60f,'b', V0, I0f, 'g', V25, I25f, 'r');
 grid on;
 xlabel('V');
 ylabel('I');
-legend({'60째C', '0째C', '25째C'}, 'Location', 'northeast' )
+legend({'60캜', '0캜', '25캜'}, 'Location', 'northeast' )
 
 
 pot0 = zeros(size(V0));
@@ -165,7 +165,7 @@ end
 figure;
 plot(V60,pot60,'b', V0, pot0, 'g', V25, pot25, 'r');
 grid on;
-legend({'60째C', '0째C', '25째C'}, 'Location', 'northeast' )
+legend({'60캜', '0캜', '25캜'}, 'Location', 'northeast' )
 xlabel('V');
 ylabel('potencia');
 

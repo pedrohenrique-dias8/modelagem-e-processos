@@ -140,7 +140,7 @@ for i1000 = 1:101
 figure;
 plot(V200,I200f,'b', V500, I500f, 'g', V1000, I1000f, 'r');
 grid on;
-legend({'200','500','1000'},'Location','northeast');
+legend({'200W/m^2','500W/m^2','1000W/m^2'},'Location','northeast');
 xlabel('V');
 ylabel('I');
 
@@ -162,7 +162,7 @@ figure;
 plot(V200,pot200,'b', V500, pot500, 'g', V1000, pot1000, 'r');
 xlabel('V');
 ylabel('potencia');
-legend({'200','500','1000'},'Location','northeast');
+legend({'200W/m^2','500W/m^2','1000W/m^2'},'Location','northeast');
 grid on;
 
 
