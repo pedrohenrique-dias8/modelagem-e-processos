@@ -4,7 +4,7 @@ close all;
 setup;
 
 G = Gn; 
-lambida = 0.35;
+lambida = 0.1;
  
  V = (0:0.01:1);
  
@@ -26,19 +26,10 @@ lambida = 0.35;
   T = 0+273;
   Vt = k*T/q;
  for i = 1:101
-     Inov = 1;
      var = 0.5; 
      Vat = V(i);
      
-      while var > 0.05
-          Iant = Inov;
-          Ipv = (G/Gn)*(Iscn + K1*(T-Tn));
-          Id = Is*(exp((Vat + Rs*Iant)/(Vt*A)) - 1);
-          Ip = ((Vat + Rs*Iant)/Rp);
-          Inov = Ipv - Id - Ip;
-          Inov = lambida*Inov + (1 - lambida)*Iant;
-          var = Inov - Iant;
-      end       
+      Inov = subrelax(var, lambida, G, T, Vat, Vt);     
        
       I0(i) = Inov;
       
@@ -67,19 +58,10 @@ lambida = 0.35;
  T = 25+273;
  Vt = k*T/q;
  for i = 1:101
-     Inov = 1;
      var = 0.5; 
      Vat = V(i);
      
-      while var > 0.0005
-          Iant = Inov;
-          Ipv = (G/Gn)*(Iscn + K1*(T-Tn));
-          Id = Is*(exp((Vat + Rs*Iant)/(Vt*A)) - 1);
-          Ip = ((Vat + Rs*Iant)/Rp);
-          Inov = Ipv - Id - Ip;
-          Inov = lambida*Inov + (1 - lambida)*Iant;
-          var = Inov - Iant;
-      end
+      Inov = subrelax(var, lambida, G, T, Vat, Vt);
       
      I25(i) = Inov;
  end
@@ -105,19 +87,10 @@ T = 60+273;
 Vt = k*T/q;
 
 for i = 1:101
-    Inov = 1;
-    var = 0.5; 
-    Vat = V(i);
-    
-     while var > 0.0005
-         Iant = Inov;
-         Ipv = (G/Gn)*(Iscn + K1*(T-Tn));
-         Id = Is*(exp((Vat + Rs*Iant)/(Vt*A)) - 1);
-         Ip = ((Vat + Rs*Iant)/Rp);
-         Inov = Ipv - Id - Ip;
-         Inov = lambida*Inov + (1 - lambida)*Iant;
-         var = Inov - Iant;
-     end
+     var = 0.5; 
+     Vat = V(i);
+     
+      Inov = subrelax(var, lambida, G, T, Vat, Vt);
      
      I60(i) = Inov;
 end 

@@ -1,5 +1,4 @@
 %SETUP
-clear all;
 clc
 sampletime = 0.02;
 
