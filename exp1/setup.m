@@ -19,3 +19,5 @@ Iscn = 3.1656; %corrente de curto-circuito nominal [A]
 Gn = 1000; %irradiação solar nominal [W/m^2]
 Tn = 25+273; %temperatura nominal da célula fotovoltaica [ºC]
 K1 = (1.8/1000)/273; %coeficiente de temperatura da corrente de curto-circuito [A/ºC]
+q = 1.602*(10^(-19)); %[C]
+k = 1.38 *(10^(-23));

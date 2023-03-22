@@ -1,6 +1,6 @@
 clc;
 clear all;
-close all
+close all;
 setup;
 
 T = Tn; 
@@ -15,20 +15,24 @@ V = (0:0.01:1);
  %Ip = zeros(1,100);
  
  
- q = 1.602*(10^(-19)); %[C]
- k = 1.38 *(10^(-23));
+
  Vt = k*T/q;
 
  %%
  lambida = 0.1;
+ tol = 0.005;
  %%
  
  G = 200;
  for i = 1:1:101
-     var = 0.05; 
-     Vat = V(i);
-     
-    Inov = subrelax(var, lambida, G, T, Vat, Vt);
+    Vat = V(i);
+    if i == 1
+        Init = 1;
+    else
+        Init = I200(i-1);
+    end 
+    
+    Inov = subrelax(tol, lambida, G, T, Vat, Init);
       
     
       I200(i) = Inov;
@@ -54,10 +58,15 @@ V = (0:0.01:1);
 
  G = 500;
  for i = 1:1:101
-     var = 0.05; 
+      
      Vat = V(i);
+    if i == 1
+        Init = 1;
+    else
+        Init = I500(i-1);
+    end 
      
-    Inov = subrelax(var, lambida, G, T, Vat, Vt);
+    Inov = subrelax(tol, lambida, G, T, Vat, Init);
      
       I500(i) = Inov;
  end
@@ -81,11 +90,15 @@ V = (0:0.01:1);
  
 %%
 G = 1000;
-for i = 1:101
-   var = 0.05; 
+for i = 1:101 
      Vat = V(i);
+     if i == 1
+        Init = 1;
+    else
+        Init = I1000(i-1);
+    end 
      
-    Inov = subrelax(var, lambida, G, T, Vat, Vt);
+    Inov = subrelax(tol, lambida, G, T, Vat, Init);
     
      I1000(i) = Inov;
 end 
@@ -111,8 +124,8 @@ figure;
 plot(V200,I200f,'b', V500, I500f, 'g', V1000, I1000f, 'r');
 grid on;
 legend({'200W/m^2','500W/m^2','1000W/m^2'},'Location','northeast');
-xlabel('V');
-ylabel('I');
+xlabel('Tensão [V]');
+ylabel('Corrente [A]');
 
 
 pot200 = zeros(size(V200));
@@ -130,8 +143,8 @@ end
 
 figure;
 plot(V200,pot200,'b', V500, pot500, 'g', V1000, pot1000, 'r');
-xlabel('V');
-ylabel('potencia');
+xlabel('Tensão [V]');
+ylabel('potencia [W]');
 legend({'200W/m^2','500W/m^2','1000W/m^2'},'Location','northeast');
 grid on;
 

@@ -32,6 +32,22 @@ k = 1.38 *(10^(-23));
          i = i + 1;
      end
      
+ for i1 = 1:11
+     if I1(i1) <= 0
+         i1 = i1 -1;
+         break
+     end
+ end
+ 
+ I1f = zeros(1,i1);
+ for i = 1:i1
+     I1f(i) = I1(i);
+ end    
+ 
+  
+ counter1 = 1:i1;
+ 
+     
  %%    
      var = 0.5;
      i = 2;
@@ -49,11 +65,26 @@ k = 1.38 *(10^(-23));
          i = i + 1;
      end
   
+  for i2 = 1:11
+     if I2(i2) <= 0
+         i2 = i2 -1;   
+         break
+     end
+ end
+ 
+ I2f = zeros(1,i2);
+ for i = 1:i2
+     I2f(i) = I2(i);
+ end    
+ 
+  
+ counter2 = 1:i2;    
 %%
 
 figure;
-plot(counter, I1, 'b', counter, I2, 'g');
+plot(counter1, I1f, 'bo', counter2, I2f, 'go');
 grid on;
-legend({'0.5','0.8'},'Location','southwest');
-
-
+legend({'lambda = 0.5','Lambda = 0.8'},'Location','southwest');
+xlabel('Iterações');
+ylabel('Corrente [A]')
+title('V = 0')

@@ -5,7 +5,7 @@ setup;
 
 G = Gn; 
 lambida = 0.1;
- 
+tol = 0.005 
  V = (0:0.01:1);
  
  I0 = zeros(size(V));
@@ -16,20 +16,23 @@ lambida = 0.1;
  %Ip = zeros(1,100);
  
  
- q = 1.602*(10^(-19)); %[C]
- k = 1.38 *(10^(-23));
- 
- 
+
  
  %%
  
   T = 0+273;
-  Vt = k*T/q;
+  
  for i = 1:101
-     var = 0.5; 
-     Vat = V(i);
      
-      Inov = subrelax(var, lambida, G, T, Vat, Vt);     
+     Vat = V(i);
+     if i == 1
+        Init = 1;
+    else
+        Init = I0(i-1);
+    end
+     
+     
+     Inov = subrelax(tol, lambida, G, T, Vat, Init);    
        
       I0(i) = Inov;
       
@@ -56,12 +59,17 @@ lambida = 0.1;
  %%
 
  T = 25+273;
- Vt = k*T/q;
+
  for i = 1:101
-     var = 0.5; 
+    
      Vat = V(i);
+     if i == 1
+        Init = 1;
+    else
+        Init = I25(i-1);
+    end
      
-      Inov = subrelax(var, lambida, G, T, Vat, Vt);
+     Inov = subrelax(tol, lambida, G, T, Vat, Init);
       
      I25(i) = Inov;
  end
@@ -84,13 +92,18 @@ V25 = zeros(1,i25);
  end
 %%
 T = 60+273;
-Vt = k*T/q;
+
 
 for i = 1:101
-     var = 0.5; 
-     Vat = V(i);
      
-      Inov = subrelax(var, lambida, G, T, Vat, Vt);
+     Vat = V(i);
+     if i == 1
+        Init = 1;
+    else
+        Init = I60(i-1);
+    end
+     
+     Inov = subrelax(tol, lambida, G, T, Vat, Init);
      
      I60(i) = Inov;
 end 
@@ -117,8 +130,8 @@ for i60 = 1:101
 figure;
 plot(V60,I60f,'b', V0, I0f, 'g', V25, I25f, 'r');
 grid on;
-xlabel('V');
-ylabel('I');
+xlabel('Tensão [V]');
+ylabel('Corrente [A]');
 legend({'60°C', '0°C', '25°C'}, 'Location', 'northeast' )
 
 
@@ -139,8 +152,8 @@ figure;
 plot(V60,pot60,'b', V0, pot0, 'g', V25, pot25, 'r');
 grid on;
 legend({'60°C', '0°C', '25°C'}, 'Location', 'northeast' )
-xlabel('V');
-ylabel('potencia');
+xlabel('Tensão [V]');
+ylabel('Potência [W]');
 
 
 

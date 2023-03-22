@@ -1,11 +1,13 @@
-function [ Inov ] = subrelax( var, lambida, G, T, Vat, Vt )
+function [ Inov ] = subrelax( tol, lambida, G, T, Vat, Init )
 %UNTITLED2 Summary of this function goes here
 %   Detailed explanation goes here
     setup;
-    Inov = 1;
-   
+    Vt = k*T/q;
     
-  while abs(var) > 0.005
+    Inov = Init;
+    var = tol*2;
+    
+  while abs(var) > tol
           Iant = Inov;
           Ipv = (G/Gn)*(Iscn + K1*(T-Tn));
           Id = Is*(exp((Vat + Rs*Iant)/(Vt*A)) - 1);
