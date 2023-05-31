@@ -2,6 +2,9 @@ clear all
 close all
 clc
 
+pkg load io;
+pkg load optim;
+
 %% Extração dos dados experimentais
 
 CtoK = 273.15; %[K] 0°C (conversão para Kelvin)
@@ -50,6 +53,7 @@ xlabel('tempo [h]')
 ylabel('temperatura [°C]')
 lh = legend('amb.','int.','evap.','cond.');
 set(lh,'location','best')
+
 return
 %% Identificação por MQ do modelo caixa-preta
 
@@ -68,7 +72,12 @@ vecTi_e(1) = vecTi(1);
 vecTe_e(1) = vecTe(1);
 vecTc_e(1) = vecTc(1);
 
-%...
+for k=2:length(vecTi)
+  phi = [ phi; 
+           (-vecTi_e(k-1)+vecTa(k-1)), (vecTe_e(k-1)-vecTi_e(k-1)), vecS(k-1), 0, 0, 0, 0, 0, 0;
+           0, 0, 0, (vecTi_e(k-1)-vecTe_e(k-1)), (-vecS(k-1)*(vecTe_e(k-1)+vecTc_e(k-1))), 0, 0, 0, 0;
+           0, 0, 0, 0, 0, vecS(k-1)*vecFreq(k-1), -vecS(k-1)*vecTc_e(k-1), (-vecS(k-1)*(vecTc_e(k-1)+vecTe_e(k-1))), (vecTa(k-1)-vecTc_e(k-1))];
+end  
 
 %% RESULTADOS
 
