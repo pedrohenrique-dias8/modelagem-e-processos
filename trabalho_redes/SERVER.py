@@ -2,7 +2,7 @@
 ######## TCP
 from socket import *
 
-port_tcp = 7000;
+port_tcp = 4000;
 port_udp = 5000;
 
 s = socket()
@@ -25,7 +25,12 @@ while True:
     print("Message via TCP:",data)
     print("Message via UDP:",msg)
 
-    aux = data + msg
+    aux = int(data) + int(msg)
+    
+    print("I will send the sum:", aux)
+    
+    aux = str(aux)
 
-    c.send(aux)
-    c.close
+    c.send(aux.encode())
+
+    c.close()

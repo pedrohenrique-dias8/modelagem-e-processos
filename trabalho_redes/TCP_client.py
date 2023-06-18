@@ -20,7 +20,7 @@ while True:
     s.send(sentence.encode())
 
     message = s.recv(1024)
-    print(message)
+    print("I have received the sum:", message)
     s.close
 
 
